@@ -1,6 +1,33 @@
-import Image from 'next/image';
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        router.push('/login');
+      } else {
+        // Handle error
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred', error);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 flex flex-col flex-grow">
       <div className="flex items-center justify-center py-4 md:py-6 lg:py-8">

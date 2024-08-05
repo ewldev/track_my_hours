@@ -11,12 +11,24 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Here you would typically validate the email and password
-    // and make an API call to authenticate the user.
-    // For this example, we'll just navigate to the track_hours page.
-    console.log('Login attempted with:', email, password);
-    router.push('/track_hours');
-  };
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        router.push('/track_hours');
+      } else {
+        // Handle error (e.g., show error message)
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred', error);
+    }
+  };;
 
   return (
     <div className="container mx-auto px-4 flex flex-col flex-grow">
