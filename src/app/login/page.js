@@ -9,7 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch('/api/auth/login', {
@@ -28,7 +28,7 @@ export default function Login() {
     } catch (error) {
       console.error('An error occurred', error);
     }
-  };;
+  };
 
   return (
     <div className="container mx-auto px-4 flex flex-col flex-grow">
