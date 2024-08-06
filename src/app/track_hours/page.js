@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { withAuth } from '../../components/withAuth';
 
-export default function TrackHours() {
+function TrackHours() {
   const [displayDate, setDisplayDate] = useState('');
   const [weekOf, setWeekOf] = useState('');
   const [weekDays, setWeekDays] = useState([]);
@@ -161,3 +162,5 @@ export default function TrackHours() {
     </div>
   );
 }
+
+export default withAuth(TrackHours);
